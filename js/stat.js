@@ -1,5 +1,22 @@
 'use strict';
 
+//функция поиска максимального элемента в массиве
+/*
+var getMaxElement = function (arr) {
+  var max = -1;       // будет принимать максим/худшее значение. По умолчанию = -1
+  var maxIndex = -1;  // игрок
+
+  for (var i = 0 ; i < times.length; i++) {
+    var time = times[i];
+    if (time > max) {
+      max = time;
+      maxIndex = i;
+    }
+  }
+  return max;
+};
+*/
+
 // функция вызывается когда игрок проходит уровень
 window.renderStatistics = function (ctx, names, times) {
   ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
@@ -12,38 +29,37 @@ window.renderStatistics = function (ctx, names, times) {
 
   ctx.fillStyle = '#000';
   ctx.font = '16px PT Mono';
-  ctx.fillText('Ура вы победили!', 120, 40);
+  ctx.fillText('Ура вы победили!', 120, 40); /* проблема с тенью*/
   ctx.fillText('Список результатов:', 120, 60);
 
 
-  var max = -1;
-  var maxIndex = -1;
+    var max = -1;       // будет принимать максим/худшее значение. По умолчанию = -1
+    var maxIndex = -1;  // игрок
 
-  for (var i = 0 ; i < times.length; i++) {
-    var time = times[i];
-    if (time > max) {
-      max = time;
-      maxIndex = i;
+    for (var i = 0 ; i < times.length; i++) {
+      var time = times[i];
+      if (time > max) {
+        max = time;
+        maxIndex = i;
+      }
     }
-  }
 
-  var histogramWidth = 150;              // px;
-  var step = histogramWidth / (max - 0); // px;
 
-  ctx.fillText('Худшее время: ' + max.toFixed(2) + 'мс у игрока ' + names[maxIndex], 120, 60);
 
-  var barHeigth = 20; // px;
-  var indent = 40;    // px;
-  var initialX = 120; // px;
-  var initialY = 80;  // px;
-  var lineHeight = 15;// px;
+  var histogramHeigth = 150;              // px; - высота гистограммы
+  var step = histogramHeigth / (max - 0); // px; - расчёт шага пропорции для масштабирования резалта в пределах окна канваса
+
+  /*ctx.fillText('Худшее время: ' + max.toFixed(2) + 'мс у игрока ' + names[maxIndex], 120, 80);*/
+
+  var barHeigth = 150; // px; высота столбца
+  var indent = 50;     // px; отступ между столбцами
+  var initialX = 140;  // px; начало по оси абсцисс, откуда идёт начало рисования
+  var initialY = 100;  // px; начало по оси ординат, откуда идёт начало рисования
+  var lineWidth = 40; // px; ширина столбца - ??
 
   for(var i = 0; i < times.length; i++) {
-    ctx.fillRect(initialX, initialY + indent * i, times[i] * step, barHeigth);
-    ctx.fillText(names[i], initialX + histogramWidth, initialY + lineHeight + indent * i);
+    /*ctx.fillText(times.toFixed(i), 120, 80);*/
+    ctx.fillRect(initialX + lineWidth * i + indent * i, initialY, lineWidth, times[i] * step); // отступ по горизонт-ли, вертикали, ширина эл-та, высота эл-та
+    ctx.fillText(names[i], initialX + lineWidth * i + indent * i, initialY + histogramHeigth); // имя игрока + отступ по горизонт-ли, вертикали
   }
-
-  /*var names = ['Siarhei'];
-  times.length == names.length;
-  */
 };
