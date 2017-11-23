@@ -21,13 +21,11 @@ window.renderStatistics = function (ctx, names, times) {
   // функция поиска максимального элемента в массиве
   var getMaxElement = function () {
     var max = -1; // будет принимать максим/худшее значение, по умолчанию = -1
-    var maxIndex = -1;
 
     for (var i = 0; i < times.length; i++) {
       var time = times[i];
       if (time > max) {
         max = time;
-        maxIndex = i;
       }
     }
     return max;
