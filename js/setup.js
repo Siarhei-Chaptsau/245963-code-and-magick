@@ -18,7 +18,7 @@ var getRandom = function (min, max) {
 */
 
 var getRandom = function (arr) { // функция генерации случайных элементов массива
-  var randomIndex = Math.round(Math.random() * arr.length); // получаем случайное число от 0 до индекса последнего элемента
+  var randomIndex = Math.round(Math.random() * (arr.length - 1)); // получаем случайное число от 0 до индекса последнего элемента
   return arr[randomIndex];
 };
 
