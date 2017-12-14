@@ -66,14 +66,14 @@
   };
   setupSubmit.addEventListener('keydown', onSubmitEnterPress);
 
-  // ----- перемещение попапа при нажатии на аватар ------ //
-
+  // функция перемещение попапа при нажатии на аватар
   dialogHandle.addEventListener('mousedown', function (evt) { // начало события перетаскивания
     evt.preventDefault();// отменяем, т.к. по умолчанию браузер запрещает перетаскивать что попало куда попал
     var startCoords = { // координаты точки, с которой начали перемещать диалог
       x: evt.clientX,
       y: evt.clientY
     };
+
     var onMouseMove = function (moveEvt) { // смещение относительно первоначальной точки
       moveEvt.preventDefault(); // отменяем, т.к. по умолчанию браузер запрещает перетаскивать что попало куда попал
       var shift = { // объёкт записывает смещение относительно стартовых координат
@@ -85,15 +85,18 @@
         x: moveEvt.clientX,
         y: moveEvt.clientY
       };
+
       setup.style.top = (setup.offsetTop - shift.y) + 'px'; // координаты верхней части родит узла минус смещение
       setup.style.left = (setup.offsetLeft - shift.x) + 'px';
     };
+
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();// отменяем, т.к. по умолчанию браузер запрещает перетаскивать что попало куда попал
 
       document.removeEventListener('mousemove', onMouseMove); // удаление обработчиков перемещения
       document.removeEventListener('mouseup', onMouseUp); // удаление обработчиков отпускания кнопки
     };
+
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   });
