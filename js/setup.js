@@ -69,20 +69,65 @@
   // показываем блок с похожими персонажами
   document.querySelector('.setup-similar').classList.remove('hidden');
 
-  // ============ Обработчики событий ============ //
-
-  // Изменение цвета мантии персонажа по нажатию
+  // Обработчик событий - изменение цвета мантии персонажа по нажатию
   userWizard.querySelector('.wizard-coat').addEventListener('click', function () {
     event.target.style.fill = getRandom(WIZARD_COAT_COLOR);
   });
 
-  // Изменение цвета глаз персонажа по нажатию
+  // Обработчик событий - изменение цвета глаз персонажа по нажатию
   userWizard.querySelector('.wizard-eyes').addEventListener('click', function () {
     event.target.style.fill = getRandom(WIZARD_EYES_COLOR);
   });
 
-  // Изменение цвета фаерболов по нажатию
+  // Обработчик событий - изменение цвета фаерболов по нажатию
   fireball.addEventListener('click', function () {
     fireball.style.background = getRandom(WIZARD_FIREBALL_COLOR);
+  });
+
+  // ----- Drag and drop ----- //
+
+  var shopElement = document.querySelector('.setup-artifacts-shop'); // магазин артефактов
+  var artifactsElement = document.querySelector('.setup-artifacts'); // рюкзак артефактов
+  var draggedItem = null;
+
+  // cрабатывает когда элемент начал перемещаться
+  shopElement.addEventListener('dragstart', function (evt) {
+    if (evt.target.tagName.toLowerCase() === 'img') {
+      draggedItem = evt.target;
+      evt.dataTransfer.setData('text/plain', evt.target.alt);
+    }
+    artifactsElement.style.outline = '2px dashed red';
+  });
+
+  // срабатывает каждые несколько сотен милисекунд когда перемещаемый элемент оказывается над зоной, принимающей перетаскиваемые элементы
+  artifactsElement.addEventListener('dragover', function (evt) {
+    evt.preventDefault();
+    return false;
+  });
+
+  // cрабатывает, когда перемещаемый элемент попадает на элемент-назначение
+  artifactsElement.addEventListener('dragenter', function (evt) {
+    evt.target.style.backgroundColor = 'yellow'; // подсветка эл-та-поля над которым перемащается объект
+    evt.preventDefault();
+  });
+
+  // событие запускается при перемещении элемента
+  artifactsElement.addEventListener('drag', function (evt) {
+    artifactsElement.style.outline = '2px dashed red';
+    evt.preventDefault();
+  });
+
+  // запускается при перемещении элемента
+  artifactsElement.addEventListener('drop', function (evt) {
+    evt.target.appendChild(draggedItem);
+    evt.target.style.backgroundColor = '';
+    artifactsElement.style.outline = '';
+    evt.preventDefault();
+  });
+
+  // запускается в момент перетаскивания, когда курсор мыши выходит за пределы элемента
+  artifactsElement.addEventListener('dragleave', function (evt) {
+    evt.target.style.backgroundColor = ''; // убираем подсветку эл-та-поля над которым перемащался объект
+    evt.preventDefault();
   });
 })();
