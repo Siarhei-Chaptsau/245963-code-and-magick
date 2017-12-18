@@ -8,7 +8,8 @@
   var WIZARD_FIREBALL_COLOR = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848']; // Массив цветов фаерболла
 
   var setup = document.querySelector('.setup');
-  var userWizard = setup.querySelector('.setup-wizard');
+  var coat = document.querySelector('#wizard-coat');
+  var eyes = document.querySelector('#wizard-eyes');
   var fireball = setup.querySelector('.setup-fireball-wrap');
 
   var similarListElement = setup.querySelector('.setup-similar-list'); // находим элемент, в который мы будем вставлять похожих магов
@@ -18,7 +19,8 @@
     return Math.round(Math.random() * (max - min) + min);
   }; */
 
-  var getRandom = function (arr) { // функция генерации случайных элементов массива
+  // функция генерации случайных элементов массива
+  var getRandom = function (arr) {
     var randomIndex = Math.round(Math.random() * (arr.length - 1)); // получаем случайное число от 0 до индекса последнего элемента
     return arr[randomIndex];
   };
@@ -69,19 +71,34 @@
   // показываем блок с похожими персонажами
   document.querySelector('.setup-similar').classList.remove('hidden');
 
+  // ----- использование коллбэков ----- //
+
+  // Функция изменения цвета
+  var fillElement = function (element, color) {
+    element.style.fill = color;
+  };
+
+  // Функция изменения фона
+  var changeElementBackground = function (element, color) {
+    element.style.backgroundColor = color;
+  };
+
   // Обработчик событий - изменение цвета мантии персонажа по нажатию
-  userWizard.querySelector('.wizard-coat').addEventListener('click', function () {
-    event.target.style.fill = getRandom(WIZARD_COAT_COLOR);
+  coat.addEventListener('click', function () {
+    // event.target.style.fill = getRandom(WIZARD_COAT_COLOR);
+    window.colorizeElement(coat, getRandom(WIZARD_COAT_COLOR), fillElement);
   });
 
   // Обработчик событий - изменение цвета глаз персонажа по нажатию
-  userWizard.querySelector('.wizard-eyes').addEventListener('click', function () {
-    event.target.style.fill = getRandom(WIZARD_EYES_COLOR);
+  eyes.addEventListener('click', function () {
+    // event.target.style.fill = getRandom(WIZARD_EYES_COLOR);
+    window.colorizeElement(eyes, getRandom(WIZARD_EYES_COLOR), fillElement);
   });
 
   // Обработчик событий - изменение цвета фаерболов по нажатию
   fireball.addEventListener('click', function () {
-    fireball.style.background = getRandom(WIZARD_FIREBALL_COLOR);
+    // fireball.style.background = getRandom(WIZARD_FIREBALL_COLOR);
+    window.colorizeElement(fireball, getRandom(WIZARD_FIREBALL_COLOR), changeElementBackground);
   });
 
   // ----- Drag and drop ----- //
