@@ -83,6 +83,17 @@
     element.style.backgroundColor = color;
   };
 
+  /*
+  function colorizeElement (element, color, callback) {
+    element.addEventListener('click', function (evt) {
+      var element = coat;
+      var color = getRandom(WIZARD_COAT_COLOR);
+      var callback = fillElement;
+      callback(evt.target, color);
+    });
+  }
+  */
+
   // Обработчик событий - изменение цвета мантии персонажа по нажатию
   coat.addEventListener('click', function () {
     // event.target.style.fill = getRandom(WIZARD_COAT_COLOR);
